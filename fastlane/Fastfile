@@ -1,0 +1,69 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+#SET APP NAME AND LIST EMAIL TO RECEIPT BUILD, ALSO ADD TEST DEVICE UUID AT ITUNE CONNECT DEVICE ID AND REBUILD
+APP_NAME = "TemplateProject"
+EMAILS = ['hieupq@dwarvesv.com', 'quang@dwarvesv.com', 'han@dwarvesv.com', 'trungpv@dwarvesv.com', 'tungnt@dwarvesv.com']
+Crashlytics_api_token = ''
+Crashlytics_build_secret = ''
+platform :ios do
+   before_all do
+    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+    
+    cocoapods
+  end
+desc "Runs all the tests"
+  lane :test do
+    scan
+  end
+
+  desc "Release to fabric when merge to develop branch"
+  lane :fabric do |values|
+    match(type: "development")
+    gym(scheme: APP_NAME, export_method: "development")
+
+    emails = values[:test_email] ? values[:test_email] : EMAILS
+    groups = values[:test_email] ? nil : nil
+    # crashlytics(api_token: Crashlytics_api_token,
+    #          build_secret: Crashlytics_build_secret,
+    #                emails: emails,
+    #                groups: groups,
+    #                 notes: 'Distributed with fastlane', # Check out the changelog_from_git_commits action
+    #         notifications: true) # Should this distribution notify your testers via email?
+  end
+
+  desc "Submit a new Beta Build to Apple TestFlight"
+  desc "This will also make sure the profile is up to date"
+  lane :beta do
+    match(type: "appstore") # more information: https://codesigning.guide
+
+    gym(scheme: APP_NAME) # Build your app - more options available
+    pilot
+    # sh "your_script.sh"
+    # You can also use other beta testing services here (run `fastlane actions`)
+  end
+
+  desc "Deploy a new version to the App Store"
+  lane :release do
+    match(type: "appstore")
+    # snapshot
+
+    gym(scheme: APP_NAME) # Build your app - more options available
+    deliver(force: true)
+
+    # frameit
+  end
+end

@@ -1,0 +1,11 @@
+git_url "git@git.dwarvesf.com:mobile/ios-certificates.git"
+
+type "development" # The default type, can be: appstore, adhoc, enterprise or development
+
+ username "trungpv@dwarvesv.com" # Your Apple Developer Portal username
+
+# For all available options run `fastlane match --help`
+# Remove the # in the beginning of the line to enable the other options
+
+
+app_identifier ["com.dwarvesv.TemplateProject","com.dwarvesv.TemplateProject.Dev"] # The bundle identifier of your app
