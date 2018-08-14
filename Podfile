@@ -26,7 +26,7 @@ def app_pods
     pod 'ObjectMapper'
     
     #Activity indicator
-    pod 'MBProgressHUD'
+    pod 'SVProgressHUD'
     
     #Ayto scroll view when keyboard appeared
     pod 'IQKeyboardManagerSwift'
