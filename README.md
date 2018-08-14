@@ -18,6 +18,6 @@
 
 ## How to run
 - Install cocoapods if you MAC didn't `brew install cocoapods`
-- Todo: Rename project by cd to project folder and run `sh ./setup.sh`
+- Todo: Rename project by cd to project folder and run `sh ./setup.sh` enter your app name, bunderId then press ⏎
 - Open `*.xcworkspace`
 - Cmd + R to run
