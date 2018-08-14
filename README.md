@@ -17,8 +17,7 @@
 - SnapKit: Autolayout easy than ever.
 
 ## How to run
-- Todo: Rename projec by run bash
 - Install cocoapods if you MAC didn't `brew install cocoapods`
-- Navigate to project folder and Run `pod install`
+- Todo: Rename project by cd to project folder and run `sh ./setup.sh`
 - Open `*.xcworkspace`
 - Cmd + R to run
