@@ -73,8 +73,8 @@ OLD_TEST_FILE="./$BASE_PROJECT_NAME$TEST_STR/$BASE_PROJECT_NAME$TEST_STR.swift"
 NEW_TEST_FOLDER="./$NEW_PROJECT_NAME$TEST_STR"
 NEW_TEST_FILE_NAME="$NEW_PROJECT_NAME$TEST_STR.swift"
 DEV_STR="DevInfo"
-DEV_PLIST="./$BASE_PROJECT_NAME$DEV_STR.plist"
-NEW_DEV_PLIST="./$NEW_PROJECT_NAME$DEV_STR.plist"
+DEV_PLIST="./$BASE_PROJECT_NAME/$BASE_PROJECT_NAME$DEV_STR.plist"
+NEW_DEV_PLIST="./$BASE_PROJECT_NAME/$NEW_PROJECT_NAME$DEV_STR.plist"
 
 ### Replace unit test content
 replace_content_file $OLD_TEST_FILE $BASE_PROJECT_NAME $NEW_PROJECT_NAME
@@ -96,3 +96,10 @@ replace_content_file $PODFILE $BASE_PROJECT_NAME $NEW_PROJECT_NAME
 pod install
 
 open ./$NEW_PROJECT_NAME.xcworkspace
+
+echo "--> Git init"
+
+rm -rf .git/
+git init
+git add .
+git commit -m "Init Project"

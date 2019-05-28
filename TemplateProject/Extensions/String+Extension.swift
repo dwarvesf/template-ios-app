@@ -51,14 +51,14 @@ extension String {
     
     func heightWithConstrainedWidth(width: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
+        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
         
         return boundingBox.height
     }
     
     func widthWithConstrainedHeight(height: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
-        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
+        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
         
         return boundingBox.width
     }
@@ -98,7 +98,7 @@ extension String {
             
             //let index: Int = self.distance(from: keyword.startIndex, to: range.lowerBound)
             
-            return self.substring(with: self.startIndex..<range.upperBound)
+            return String(self[self.startIndex ..< range.upperBound])
         }
         
         return ""
@@ -119,17 +119,17 @@ extension String {
     }
     
     func colored(color: UIColor) -> NSAttributedString {
-        var attributes = [NSAttributedStringKey: AnyObject]()
+        var attributes = [NSAttributedString.Key: AnyObject]()
         attributes[.foregroundColor] = color
         return NSAttributedString(string: self, attributes: attributes)
     }
     func toBold() -> NSMutableAttributedString {
-        let attrs = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)]
+        let attrs = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)]
         let boldString = NSMutableAttributedString(string:"\(self)", attributes:attrs)
         return boldString
     }
     func toBold(color: UIColor, size: CGFloat) -> NSMutableAttributedString {
-        let attrs = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: size, weight: UIFont.Weight.medium), NSAttributedStringKey.foregroundColor: color]
+        let attrs = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: size, weight: UIFont.Weight.medium), NSAttributedString.Key.foregroundColor: color]
         return NSMutableAttributedString(string:"\(self)", attributes:attrs)
     }
     func append(string:String, color:UIColor) -> NSMutableAttributedString{
@@ -140,19 +140,19 @@ extension String {
 }
 extension NSMutableAttributedString {
     @discardableResult func appEndBold(_ text:String) -> NSMutableAttributedString {
-        let attrs = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)]
+        let attrs = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)]
         let boldString = NSMutableAttributedString(string:"\(text)", attributes:attrs)
         self.append(boldString)
         return self
     }
     @discardableResult func appEndBold(_ text:String, color: UIColor, size:CGFloat) -> NSMutableAttributedString {
-        let attrs = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: size, weight: UIFont.Weight.medium), NSAttributedStringKey.foregroundColor: color]
+        let attrs = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: size, weight: UIFont.Weight.medium), NSAttributedString.Key.foregroundColor: color]
         let boldString = NSMutableAttributedString(string:"\(text)", attributes:attrs)
         self.append(boldString)
         return self
     }
     @discardableResult func appEndColor(text:String, color: UIColor) -> NSMutableAttributedString {
-        let attrs = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16), NSAttributedStringKey.foregroundColor: color]
+        let attrs = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: color]
         let coloredString = NSMutableAttributedString(string:"\(text)", attributes:attrs)
         self.append(coloredString)
         return self

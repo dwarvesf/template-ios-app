@@ -27,7 +27,7 @@ import UIKit
 /**
 UIView hierarchy category.
 */
-public extension UIView {
+@objc public extension UIView {
     
     ///----------------------
     /// MARK: viewControllers
@@ -36,7 +36,7 @@ public extension UIView {
     /**
     Returns the UIViewController object that manages the receiver.
     */
-    @objc public func viewContainingController()->UIViewController? {
+    @objc func viewContainingController()->UIViewController? {
         
         var nextResponder: UIResponder? = self
         
@@ -55,7 +55,7 @@ public extension UIView {
     /**
     Returns the topMost UIViewController object in hierarchy.
     */
-    @objc public func topMostController()->UIViewController? {
+    @objc func topMostController()->UIViewController? {
         
         var controllersHierarchy = [UIViewController]()
 
@@ -89,10 +89,11 @@ public extension UIView {
     /**
      Returns the UIViewController object that is actually the parent of this object. Most of the time it's the viewController object which actually contains it, but result may be different if it's viewController is added as childViewController of another viewController.
      */
-    @objc public func parentContainerViewController()->UIViewController? {
+    @objc func parentContainerViewController()->UIViewController? {
         
         var matchController = viewContainingController()
-        
+        var parentContainerViewController : UIViewController?
+
         if var navController = matchController?.navigationController {
             
             while let parentNav = navController.navigationController {
@@ -110,17 +111,17 @@ public extension UIView {
             }
 
             if navController == parentController {
-                return navController.topViewController
+                parentContainerViewController = navController.topViewController
             } else {
-                return parentController
+                parentContainerViewController = parentController
             }
         }
         else if let tabController = matchController?.tabBarController {
             
             if let navController = tabController.selectedViewController as? UINavigationController {
-                return navController.topViewController
+                parentContainerViewController = navController.topViewController
             } else {
-                return tabController.selectedViewController
+                parentContainerViewController = tabController.selectedViewController
             }
         } else {
             while let parentController = matchController?.parent,
@@ -131,8 +132,13 @@ public extension UIView {
                         matchController = parentController
             }
 
-            return matchController;
+            parentContainerViewController = matchController
         }
+        
+        let finalController = parentContainerViewController?.parentIQContainerViewController() ?? parentContainerViewController
+        
+        return finalController
+
     }
 
     ///-----------------------------------
@@ -141,8 +147,13 @@ public extension UIView {
     
     /**
     Returns the superView of provided class type.
-    */
-    @objc public func superviewOfClassType(_ classType:UIView.Type)->UIView? {
+
+     
+     @param classType class type of the object which is to be search in above hierarchy and return
+     
+     @param belowView view object in upper hierarchy where method should stop searching and return nil
+*/
+    @objc func superviewOfClassType(_ classType:UIView.Type, belowView:UIView? = nil) -> UIView? {
 
         var superView = superview
         
@@ -167,6 +178,8 @@ public extension UIView {
                 else {
                     return superView
                 }
+            } else if unwrappedSuperView == belowView {
+                return nil
             }
             
             superView = unwrappedSuperView.superview
@@ -251,7 +264,7 @@ public extension UIView {
         }
         
         if _IQcanBecomeFirstResponder == true {
-            _IQcanBecomeFirstResponder = isUserInteractionEnabled == true && isHidden == false && alpha != 0.0 && isAlertViewTextField() == false && searchBar() == nil
+            _IQcanBecomeFirstResponder = isUserInteractionEnabled == true && isHidden == false && alpha != 0.0 && isAlertViewTextField() == false && textFieldSearchBar() == nil
         }
 
         return _IQcanBecomeFirstResponder
@@ -264,7 +277,7 @@ public extension UIView {
     /**
      Returns searchBar if receiver object is UISearchBarTextField, otherwise return nil.
     */
-    internal func searchBar()-> UISearchBar? {
+    internal func textFieldSearchBar()-> UISearchBar? {
         
         var responder : UIResponder? = self.next
         
@@ -316,6 +329,12 @@ public extension UIView {
     
 }
 
+@objc public extension UIViewController {
+
+    func parentIQContainerViewController() -> UIViewController? {
+        return self
+    }
+}
 
 extension NSObject {
     

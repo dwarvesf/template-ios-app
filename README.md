@@ -1,5 +1,5 @@
 ## Template project iOS
- Mobile template is written with Swift 4.0. This template project include bunch of 3rd frameworks and class extensions for you easy to create new project without waste time to add common  Utilities.
+ Mobile template is written with Swift 5.0. This template project include bunch of 3rd frameworks and class extensions for you easy to create new project without waste time to add common  Utilities.
 ## Architecture
  Choose what ever architechture you want 
 ## Fastlane
@@ -12,7 +12,6 @@
   Bring power of ReactiveX to Swift
 
 - Kingfisher: Set and cache image simply  with URL
-- ObjectMapper: JSON <-> Object
 - IQKeyboardManagerSwift: Automatic handle keyboard on ScrollView.
 - SnapKit: Autolayout easy than ever.
 

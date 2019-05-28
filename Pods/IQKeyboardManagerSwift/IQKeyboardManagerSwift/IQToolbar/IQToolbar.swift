@@ -55,7 +55,7 @@ open class IQToolbar: UIToolbar , UIInputViewAudioFeedback {
         get {
             if privatePreviousBarButton == nil {
                 privatePreviousBarButton = IQBarButtonItem(image: nil, style: .plain, target: nil, action: nil)
-                privatePreviousBarButton?.accessibilityLabel = "Toolbar Previous Button"
+                privatePreviousBarButton?.accessibilityLabel = "Previous"
             }
             return privatePreviousBarButton!
         }
@@ -73,7 +73,7 @@ open class IQToolbar: UIToolbar , UIInputViewAudioFeedback {
         get {
             if privateNextBarButton == nil {
                 privateNextBarButton = IQBarButtonItem(image: nil, style: .plain, target: nil, action: nil)
-                privateNextBarButton?.accessibilityLabel = "Toolbar Next Button"
+                privateNextBarButton?.accessibilityLabel = "Next"
             }
             return privateNextBarButton!
         }
@@ -91,7 +91,7 @@ open class IQToolbar: UIToolbar , UIInputViewAudioFeedback {
         get {
             if privateTitleBarButton == nil {
                 privateTitleBarButton = IQTitleBarButtonItem(title: nil)
-                privateTitleBarButton?.accessibilityLabel = "Toolbar Title Button"
+                privateTitleBarButton?.accessibilityLabel = "Title"
             }
             return privateTitleBarButton!
         }
@@ -109,7 +109,7 @@ open class IQToolbar: UIToolbar , UIInputViewAudioFeedback {
         get {
             if privateDoneBarButton == nil {
                 privateDoneBarButton = IQBarButtonItem(title: nil, style: .done, target: nil, action: nil)
-                privateDoneBarButton?.accessibilityLabel = "Toolbar Done Button"
+                privateDoneBarButton?.accessibilityLabel = "Done"
             }
             return privateDoneBarButton!
         }
@@ -129,6 +129,13 @@ open class IQToolbar: UIToolbar , UIInputViewAudioFeedback {
                 privateFixedSpaceBarButton = IQBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
             }
             privateFixedSpaceBarButton!.isSystemItem = true
+
+            if #available(iOS 10, *) {
+                privateFixedSpaceBarButton!.width = 6
+            } else {
+                privateFixedSpaceBarButton!.width = 20
+            }
+            
             return privateFixedSpaceBarButton!
         }
         
